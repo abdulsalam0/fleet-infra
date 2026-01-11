@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: weave-gitops
+  namespace: flux-system
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: weave-gitops
+      version: "4.0.36" # Pinning version for stability
+      sourceRef:
+        kind: HelmRepository
+        name: weave-gitops
+        namespace: flux-system
+  values:
+    # 3. Create a default admin user
+    # Username: admin
+    # Password: flux (This is a bcrypt hash)
+    adminUser:
+      create: true
+      username: admin
+      passwordHash: "$2a$10$P/wR6d.1.wS7.e7uXoQxIOk2/M2VjF6.wW7.e7uXoQxIOk2/M2VjF6"
